@@ -1,29 +1,29 @@
--- Выводим список тэгов для каждой статьи
+-- Р’С‹РІРѕРґРёРј СЃРїРёСЃРѕРє С‚СЌРіРѕРІ РґР»СЏ РєР°Р¶РґРѕР№ СЃС‚Р°С‚СЊРё
 select a.name, t.name
 from Article a
 	left join CrossArtTag c on c.ArtId = a.id
 	left join Tag t on t.id = c.TagId;
 
--- Выводим список статей для кажгого тэга
+-- Р’С‹РІРѕРґРёРј СЃРїРёСЃРѕРє СЃС‚Р°С‚РµР№ РґР»СЏ РєР°Р¶РіРѕРіРѕ С‚СЌРіР°
 select t.name, a.name
 from Tag t
 	left join CrossArtTag c on c.TagId = t.id
 	left join Article a on a.id = c.ArtId;
 
--- Выводим весь список отношений статей и тэгов
+-- Р’С‹РІРѕРґРёРј РІРµСЃСЊ СЃРїРёСЃРѕРє РѕС‚РЅРѕС€РµРЅРёР№ СЃС‚Р°С‚РµР№ Рё С‚СЌРіРѕРІ
 select a.name, t.name
 from Article a
 	left join CrossArtTag c on c.ArtId = a.id
 	full join Tag t on t.id = c.TagId;
 
--- Выводим кол-во тэгов для каждой статьи
+-- Р’С‹РІРѕРґРёРј РєРѕР»-РІРѕ С‚СЌРіРѕРІ РґР»СЏ РєР°Р¶РґРѕР№ СЃС‚Р°С‚СЊРё
 select a.name, count(t.id) as tagsCount
 from Article a
 	left join CrossArtTag c on c.ArtId = a.id
 	left join Tag t on t.id = c.TagId
 group by a.id, a.name
 
--- Выводим кол-во тэгов для каждой статьи (у которой ЕСТЬ тэги)
+-- Р’С‹РІРѕРґРёРј РєРѕР»-РІРѕ С‚СЌРіРѕРІ РґР»СЏ РєР°Р¶РґРѕР№ СЃС‚Р°С‚СЊРё (Сѓ РєРѕС‚РѕСЂРѕР№ Р•РЎРўР¬ С‚СЌРіРё)
 select a.name, count(t.id) as tagsCount
 	from Article a
 	left join CrossArtTag c on c.ArtId = a.id
@@ -31,7 +31,7 @@ select a.name, count(t.id) as tagsCount
 group by a.id, a.name
 having count(t.id) > 0
 order by count(t.id) desc;
--- ИЛИ
+-- РР›Р
 select a.name, count(*) as tagsCount
 from Article a
 	inner join CrossArtTag c on c.ArtId = a.id
@@ -39,8 +39,8 @@ from Article a
 group by a.id, a.name
 order by count(*) desc;
 
--- Выводим все статьи у которых нет тэгов,
--- джойнить 3ю таблицу не нужно, достаточно убедиться, что нет связей
+-- Р’С‹РІРѕРґРёРј РІСЃРµ СЃС‚Р°С‚СЊРё Сѓ РєРѕС‚РѕСЂС‹С… РЅРµС‚ С‚СЌРіРѕРІ,
+-- РґР¶РѕР№РЅРёС‚СЊ 3СЋ С‚Р°Р±Р»РёС†Сѓ РЅРµ РЅСѓР¶РЅРѕ, РґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СѓР±РµРґРёС‚СЊСЃСЏ, С‡С‚Рѕ РЅРµС‚ СЃРІСЏР·РµР№
 select a.name
 from Article a
 	left join CrossArtTag c on c.ArtId = a.id
